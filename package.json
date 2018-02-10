@@ -1,0 +1,30 @@
+{
+  "name": "mongodb-article-scraper",
+  "version": "1.0.0",
+  "description": "A web app that lets users view and leave comments on the latest news. NPM Packages: 1. express  2. express-handlebars  3. mongoose  4. body-parser  5. cheerio  6. request and deployed on Heroku.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lysnandie/mongoDB-Article-Scraper.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Lysnandie/mongoDB-Article-Scraper/issues"
+  },
+  "homepage": "https://github.com/Lysnandie/mongoDB-Article-Scraper#readme",
+  "dependencies": {
+    "axios": "^0.17.1",
+    "body-parser": "^1.18.2",
+    "cheerio": "^1.0.0-rc.2",
+    "express": "^4.16.2",
+    "mongoose": "^5.0.4",
+    "morgan": "^1.9.0",
+    "request": "^2.83.0",
+    "save": "^2.3.2"
+  }
+}
