@@ -26,28 +26,26 @@ app.use(express.static("public"));
 // By default mongoose uses callbacks for async queries, we're setting it to use promises (.then syntax) instead
 // Connect to the Mongo DB
 mongoose.Promise = Promise;
-mongoose.connect("mongodb://localhost/articlescraperdb", {
-  useMongoClient: true
-});
+mongoose.connect("mongodb://localhost/articlescrapperdb");
 
 // A GET route for scraping the NYTimes Website
 app.get("/scrape", function(req, res) {
 
-    axios.get("https://www.nytimes.com/").then(function(response) {
+    axios.get("https://www.essence.com/").then(function(response) {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
     var $ = cheerio.load(response.data);
 
     // Now, we grab every h2 within an article tag, and do the following:
-    $("article h2").each(function(i, element) {
+    $("div.story-card").each(function(i, element) {
       // Save an empty result object
       var result = {};
 
       // Add the text and href of every link, and save them as properties of the result object
       result.title = $(this)
-        .children("a")
+        .find("a.story-card__title")
         .text();
       result.link = $(this)
-        .children("a")
+        .find("a.story-card__title")
         .attr("href");
 console.log(result);
       // Create a new Article using the `result` object built from scraping
@@ -117,6 +115,42 @@ app.post("/articles/:id", function(req, res) {
     });
 });
 
+// Route for deleting an Article's associated Note
+app.delete("/articles/:id", function(req, res) {
+  // delete the note and pass the req.body to the entry
+  db.Note.deleteOne({ _id: req.params.id })
+    .then(function(dbNote) {
+      // If a Note was deleted successfully,
+      // the following is much like saving a note
+      return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
+    })
+    .then(function(dbArticle) {
+      // If we were able to successfully update an Article, send it back to the client
+      res.json(dbArticle);
+    })
+    .catch(function(err) {
+      // If an error occurred, send it to the client
+      res.json(err);
+    });
+});
+
+// Route for getting a specific Article by title, and then deleting it
+app.delete("/articles/test/:title", function(req, res) {
+    // Using the title passed in the title parameter, and make a query that finds the matching one in the db
+    db.Article.deleteOne({ title: req.params.title })
+      .then(function(dbArticle) {
+      // I might add this next line because it was use above. currently not getting the new list with
+      //  currently there.
+        //return db.Article.findOneAndUpdate({ test: req.params.test }, { new: true });
+      // If successful, give the list without the given title, send it back to the client
+        res.json(dbArticle);
+      })
+      .catch(function(err) {
+        // but if an error occurred, send it to the client
+        res.json(err);
+      });
+  });
+  
 // Start the server
 app.listen(PORT, function() {
   console.log("App running on port " + PORT + "!");

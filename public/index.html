@@ -1,17 +1,47 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>New York Times Artilce Scrapper</title>
-  </head>
-  <body>
-<div id="test">
 
-</div>
+<head>
+  <meta charset="utf-8">
+  <title>Essence Site Scrapper</title>
+</head>
 
-<!--stylesheet-->
-<link rel="stylesheet" src="style.css">
-<!--boostrap-->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"  />
-  </body>
+</head>
+
+<body>
+  <div class="container">
+    <div class="jumbotron">
+      <h1>My Essence</h1>
+      <center>
+        <h2>Browse without the adds!</h2>
+      </center>
+    </div>
+  </div>
+
+  <section id="section">
+    <div id="wrapper">
+      <div id="buttons">
+        <button id="scrape">Scrape for Articles</button>
+        <button id="listArticles">List Articles</button>
+      </div>
+
+      <h2><i>Click on an article's text below to make a note.</i></h2>
+      <div id="articles"></div>
+      <div id="notes"></div>
+    </div>
+  </section>
+
+
+
+  <!--stylesheet-->
+  <link rel="stylesheet" href="style.css">
+  <!--googlestylesheet--->
+  <link href="https://fonts.googleapis.com/css?family=Cinzel+Decorative" rel="stylesheet">
+  <!--boostrap-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+  <!---Javascript-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="app.js"></script>
+</body>
+
 </html>
