@@ -9,23 +9,18 @@ $(document).on("click", "#scrape", function() {
 // List the scraped articles by clicking the List Articles button
 $(document).on("click", "#listArticles", function() {
 
-  // A test needs to be added here
-  // to see if there are repeats in the list of articles
-  // Add a counter so that a current version of (data) can be
-  // compared to the incoming version of (data).
-  // If a title is the same, skip over that set of data (i), and test next one.
 
   // Get the articles as a json
   $.getJSON("/articles", function(data) {
-  // For each one
+    // For each one
     for (var i = 0; i < data.length; i++) {
-    // Display the information on the page
+      // Display the information on the page
       $("#articles").append("<p data-id='" +
-      data[i]._id + "'>" +
-      data[i].title + "</p><button data-title='" +
-      data[i].title + "' class='deleteArticle'>Delete Article</button><a href='" +
-      data[i].link + "' target='_blank'>" +
-      data[i].link + "</a>");
+        data[i]._id + "'>" +
+        data[i].title + "</p><button data-title='" +
+        data[i].title + "' class='deleteArticle'>Delete Article</button><a href='" +
+        data[i].link + "' target='_blank'>" +
+        data[i].link + "</a>");
     }
   });
 });
@@ -39,9 +34,9 @@ $(document).on("click", "p", function() {
 
   // Now make an ajax call for the Article
   $.ajax({
-    method: "GET",
-    url: "/articles/" + thisId
-  })
+      method: "GET",
+      url: "/articles/" + thisId
+    })
     // With that done, add the note information to the page
     .then(function(data) {
       console.log(data);
@@ -73,15 +68,15 @@ $(document).on("click", "#saveNote", function() {
 
   // Run a POST request to change the note, using what's entered in the inputs
   $.ajax({
-    method: "POST",
-    url: "/articles/" + thisId,
-    data: {
-      // Value taken from title input
-      title: $("#titleinput").val(),
-      // Value taken from note textarea
-      body: $("#bodyinput").val()
-    }
-  })
+      method: "POST",
+      url: "/articles/" + thisId,
+      data: {
+        // Value taken from title input
+        title: $("#titleinput").val(),
+        // Value taken from note textarea
+        body: $("#bodyinput").val()
+      }
+    })
     // With that done
     .then(function(data) {
       // Log the response
@@ -100,11 +95,11 @@ $(document).on("click", "#deleteNote", function() {
   // Grab the id associated with the article
   var thisId = $(this).attr("data-id");
   console.log(thisId);
-  // Run a DELETE request to delete the note
+
   $.ajax({
-    method: "DELETE",
-    url: "/articles/" + thisId
-  })
+      method: "DELETE",
+      url: "/articles/" + thisId
+    })
     // still need to empty the notes div as before
     .then(function() {
       $("#notes").empty();
@@ -127,26 +122,26 @@ $(document).on("click", ".deleteArticle", function() {
 
   // Run a DELETE request to delete the article
   $.ajax({
-    method: "DELETE",
-    url: "/articles/test/" + thisTitle
-  })
-    //need to relist the articles without the deleted one
+      method: "DELETE",
+      url: "/articles/test/" + thisTitle
+    })
+
     .then(function() {
-      //empty out the articles section in order to repopulate with the current list of articles
-      //without the recently deleted one.
+
+
 
       $.getJSON("/articles", function(data) {
         // For each one
         console.log(data);
-          for (var i = 0; i < data.length; i++) {
+        for (var i = 0; i < data.length; i++) {
           // Display the information on the page
-            $("#articles").append("<p data-id='" +
+          $("#articles").append("<p data-id='" +
             data[i]._id + "'>" +
             data[i].title + "</p><button data-title='" +
             data[i].title + "' class='deleteArticle'>Delete Article</button><a href='" +
             data[i].link + "' target='_blank'>" +
             data[i].link + "</a>");
-          }
-        });
+        }
+      });
     });
 });
