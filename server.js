@@ -12,7 +12,7 @@ const cheerio = require("cheerio");
 const db = require("./models");
 
 //localhost PORT
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 //initialize express
 const app = express();
 
@@ -25,8 +25,12 @@ app.use(express.static("public"));
 
 // By default mongoose uses callbacks for async queries, we're setting it to use promises (.then syntax) instead
 // Connect to the Mongo DB
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/articlescrapperdb";
 mongoose.Promise = Promise;
-mongoose.connect("mongodb://localhost/articlescrapperdb");
+
+//MONGODB_URI: mongodb://heroku_lm995vnw:le2j7a06pbnd2ufd92ojmqp2nc@ds115446.mlab.com:15446/heroku_lm995vnw
+
+mongoose.connect(MONGODB_URI);
 
 // A GET route for scraping the NYTimes Website
 app.get("/scrape", function(req, res) {
@@ -150,7 +154,7 @@ app.delete("/articles/test/:title", function(req, res) {
         res.json(err);
       });
   });
-  
+
 // Start the server
 app.listen(PORT, function() {
   console.log("App running on port " + PORT + "!");
