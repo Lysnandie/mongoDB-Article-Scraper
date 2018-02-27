@@ -32,6 +32,11 @@ mongoose.Promise = Promise;
 
 mongoose.connect(MONGODB_URI);
 
+// Start the server
+app.listen(PORT, function() {
+  console.log("App running on port " + PORT + "!");
+});
+
 // A GET route for scraping the NYTimes Website
 app.get("/scrape", function(req, res) {
 
@@ -154,8 +159,3 @@ app.delete("/articles/test/:title", function(req, res) {
         res.json(err);
       });
   });
-
-// Start the server
-app.listen(PORT, function() {
-  console.log("App running on port " + PORT + "!");
-});
